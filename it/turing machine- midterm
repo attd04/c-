@@ -1,0 +1,113 @@
+0 * * * s1 
+s1 * * R s1 
+s1 _ _ * s3 ; if there's a space go s3 
+s3 _ _ R s3 
+s3 * * * s4 
+
+; counting number of numbers in string 
+s4 * * R s5 
+s5 _ _ * single 
+s5 * * R s6 
+s6 _ _ * double 
+s6 * * R s7 
+s7 _ _ * triple 
+s7 * * R s8 
+s8 _ _ * four 
+
+; single number 
+single _ _ L ss1
+ss1 0 _ L ss1.0 
+ss1 1 _ L ss1.1 
+ss1.0 _ _ L ss1.0 
+ss1.1 _ _ L ss1.1 
+ss1.0 * * R ss1.01 
+ss1.1 * * R ss1.11 
+ss1.01 _ _ R ss1.02 
+ss1.11 _ _ R ss1.12 
+ss1.02 _ 0 * s1 
+ss1.12 _ 1 * s1 
+
+ss1 # _ L ssh 
+ssh _ _ L ssh 
+ssh * * R ssh1 
+ssh1 _ _ R ssh2 
+ssh2 _ # * end
+ 
+; double string
+double _ _ L d1 
+d1 * * L d1 
+d1 _ _ R d2 
+d2 0 _ * d2.0 
+d2 1 _ * d2.1 
+
+; if first is 0 
+d2.0 _ _ L d2.0
+d2.0 * * R d2.01 
+d2.01 _ _ R d2.02 
+d2.02 _ 0 * d3 
+d3 * * R d4 
+d4 _ _ R d5 
+d5 1 _ L d5.1 
+d5 0 _ L d5.0 
+d5.1 _ 1 * s1 
+d5.0 _ 0 * s1 
+
+; triple 
+triple _ _ L t1 
+t1 * * L t1
+ t1 _ _ R t2 
+t2 0 _ * t2.0 
+t2 1 _ * t2.1 
+
+; first 0
+t2.0 _ _ L t2.0
+t2.0 * * R t2.01
+t2.01 _ _ R t2.02 
+t2.02 _ 0 R t2.03
+ 
+; first 1
+t2.1 _ _ L t2.1 
+t2.1 * * R t2.11 
+t2.11 _ _ R t2.12 
+t2.12 _ 1 R t2.03 
+
+; other digits 
+t2.03 _ _ R t2.04 
+t2.04 1 _ L t2.15 
+t2.15 _ 1 R t2.03 
+t2.04 0 _ L t2.05 
+t2.05 _ 0 R t2.03 
+t2.04 _ _ * s1 
+
+; four string 
+four _ _ L f1 
+f1 * * L f1 
+f1 _ _ R f2 
+f2 0 _ * f2.0
+f2 1 _ * f2.1 
+
+; first 0
+f2.0 _ _ L f2.0 
+f2.0 * * R f2.01 
+f2.01 _ _ R f2.02 
+f2.02 _ 0 R f2.03 
+
+; first 1
+ f2.1 _ _ L f2.1 
+f2.1 * * R f2.11 
+f2.11 _ _ R f2.12 
+f2.12 _ 1 R f2.03 
+
+; other digits 
+f2.03 _ _ R f2.04
+f2.04 1 _ L f2.15 
+f2.15 _ 1 R f2.03 
+f2.04 0 _ L f2.05 
+f2.05 _ 0 R f2.03 
+f2.04 _ _ * s1 
+
+end * * * accept 
+accept * * r accept2 
+accept2 * * * halt-accept 
+
+
