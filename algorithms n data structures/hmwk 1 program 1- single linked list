@@ -100,6 +100,15 @@ public:
                 delete largest;
             }
         }
+    
+    // function for deleting list
+    void deleteLinkedList() {
+        while (head) {
+            Node* temp = head;   // Store the current head node
+            head = head->next;  // Move the head to the next node
+            delete temp;        // Delete the current node
+        }
+    }
 
     // function for printing
     void printList() {
@@ -132,17 +141,41 @@ int main() {
         std::cout << "\n-------------------------------- " << endl;
         std::cin >>  choice;
         
+        int check = 99999;
+        int count = 0;
+
         if (choice == 1){
-            // user input for list
-            std::cout << "Enter the number of elements: ";
-            std::cin >> N;
-            std::cout << "Enter " << N << " integers:" << std::endl;
-            // put given values in list
-            for (int i = 0; i < N; i++) {
-                int num;
-                std::cin >> num;
-                list.insert(num);
+            bool different_list = false;
+            
+            while (!different_list){
+                // user input for list
+                std::cout << "Enter the number of elements: ";
+                std::cin >> N;
+                std::cout << "Enter " << N << " integers:" << std::endl;
+                // put given values in list
+                for (int i = 0; i < N; i++) {
+                    int num;
+                    std::cin >> num;
+                    // checking for different values
+                    if (num == check){
+                        count++;
+                    }
+                    check = num;
+                    
+                    list.insert(num);
+                }
+                
+                if (count == N-1){
+                    std::cout << "The list needs a variety of elements. Please re enter your list." << "\n" << endl;
+                    count = 0;
+                    list.deleteLinkedList();
+                    different_list = false;
+                }
+                else {
+                    different_list = true;
+                }
             }
+            
             // access function for task 1
             list.removeLargestAndSmallest();
             std::cout << "\nTask 1: list after removing largest and smallest elements:" << std::endl;
@@ -157,3 +190,4 @@ int main() {
     cout << "\n";
     return 0;
 }
+
