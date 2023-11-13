@@ -1,0 +1,608 @@
+
+1.0 - Print "Hello World!"
+#include <iostream>
+
+int main(){
+    std::cout << "Hello World!";
+}
+
+----------------
+1.1 - read an integer from input and print it
+#include <iostream>
+
+int main(){
+    int N;
+    std::cin >> N;
+    std::cout << "Integer from input: " << N;
+}
+
+----------------
+1.2 - Given 2 integers a and b find their sum and difference.
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b;
+    cin >> a;
+    cin >> b;
+    
+    cout << a << " + " << b << " = " << a+b << endl;
+    cout << a << " - " << b << " = " << a-b;
+}
+
+----------------
+1.3 - Given side lengths of rectangle find its perimeter.
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b;
+    cin >> a;
+    cin >> b;
+    
+    cout << a+a+b+b;
+}
+
+----------------
+1.4 - Given side lengths of rectangle find its area.
+#include <iostream>
+using namespace std;
+
+int main(){
+    long a, b;
+    cin >> a;
+    cin >> b;
+    
+    cout << a*b;
+}
+
+----------------
+1.5 - John found a rectangular chocolate bar of side lengths a and b. 
+Now he wants to divide it among his n friends. 
+Find how much square units of chocolate each friend will get. 
+Output the answer rounded to 2 decimal digits after floating point.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    double a, b, n;
+    cin >> a;
+    cin >> b;
+    cin >> n;
+    
+    double ans = (a*b)/n;
+    printf("%.2f",ans);
+}
+
+----------------
+1.6 - Given rectangle perimeter P and it‘s side length a find its area.
+#include <iostream>
+using namespace std;
+
+int main(){
+    double P, a;
+    cin >> P;
+    cin >> a;
+
+    double width = (P / 2) - a;
+    cout << a * width;
+
+}
+
+----------------
+1.7 - Given sides of a rectangle find the area of a circle circumscribed around it. 
+Instead of value pi use an approximation value of 355/113.
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double a, b;
+    cin >> a;
+    cin >> b;
+
+    double rad = (sqrt(a*a + b*b)) / 2.0;
+    double pi = 355.0 / 113.0;
+    
+    double ans = (pi * rad * rad);
+    
+    cout << fixed << setprecision(2) << ans;
+    
+    return 0;
+}
+
+----------------
+1.8 - Given an integer with 3 digits, find its sum of digits
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    int num1 = a / 100;
+    int num2 = (a / 10) % 10;
+    int num3 = a % 10;
+    
+    cout << num1 + num2 + num3;
+
+}
+
+----------------
+1.9 - Given perimeter P and area S of rectangle find the lengths of it sides.
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main(){
+    double P, s;
+    cin >> P;
+    cin >> s;
+    
+    double a = (P/4) + sqrt(((P/4)*(P/4)) - s);
+    double b = (P/2) - a;
+    
+    if (a < b){
+        cout << a << " " << b;
+    }
+    else {
+        cout << b << " " << a;
+    }
+}
+
+----------------
+1.10 - Given an integer check if its positive
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    if (a > 0){
+        cout << "YES";
+    }
+        
+    else {
+        cout << "NO";
+        }
+}
+
+----------------
+1.11 - Given 2 sides of rectangle check if its a square, if it is output its area, otherwise - perimeter of rectangle
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b, ans;
+    cin >> a;
+    cin >> b;
+    
+    if (a == b){
+        ans = (a*b);
+    }
+    else {
+        ans = a+a+b+b;
+    }
+    
+    cout << ans;
+}
+
+----------------
+1.12 - Given an integer check if it has 3 digits
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    int b = (a/100);
+    
+    if (b > 0){
+        int c = b/10;
+        if (c > 0){
+            cout << "NO";
+        }
+        else {
+            cout << "YES";
+        }
+    }
+    else {
+        cout << "NO";
+    }
+}
+
+----------------
+1.13 - Watermelon weights n kilograms, you want to split it in 2 parts in such 
+that both parts are non-empty and weight is even amount of kilograms. 
+Determine if this is possible.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    if (a == 2){
+        cout << "NO";
+        return 0;
+    }
+
+    if (a%2 != 0){
+        cout << "NO";
+    }
+    else {
+        cout << "YES";
+    }
+}
+
+----------------
+1.14 - N matches lay on a table, now you wonder is it possible to 
+construct an equilateral triangle or a rectangle or a square using all of the matches?
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    if (a == 0){
+        cout << "NO";
+        return 0;
+    }
+    
+    int t = a%3;
+    if (t != 0){
+        if (a > 8 && a%2 == 0){
+            cout << "YES";
+        }
+        else{
+            cout << "NO";
+        }
+    }
+    else {
+        cout << "YES";
+    }
+}
+
+----------------
+1.15 - Given 3 integers find the maximum integer among them.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b, c;
+    cin >> a;
+    cin >> b;
+    cin >> c;
+    
+    if (a >= b && a >= c){
+        cout << a;
+        return 0;
+    }
+    else if (b >= a && b >= c){
+        cout << b;
+        return 0;
+    }
+    else if (c >= a && c >= b){
+        cout << c;
+        return 0;
+    }
+}
+
+----------------
+1.16 - Given sides of a rectangle find the area of a circle inscribed inside it. 
+Instead of value pi use an approximation value of 355/113.Give answer rounded to 2 digits after floating point
+
+----------------
+1.17 - You are given coefficients of quadratic equation ax2 + bx + c = 0. 
+Now you need to find all solutions it has.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    double a, b, c;
+    cin >> a;
+    cin >> b;
+    cin >> c;
+    
+    double d = b * b - 4 * a * c;
+    
+    if (d > 0) {
+        double root1 = (-b + sqrt(d)) / (2 * a);
+        double root2 = (-b - sqrt(d)) / (2 * a);
+        
+        if (root1 < root2){
+            cout << root1 << " " << root2;
+        }
+        else {
+            cout << root2 << " " << root1;
+        }
+      }
+    else if (d == 0) {
+        double root = -b / (2 * a);
+        cout << root;
+      }
+    else {
+        cout << "NO";
+    }
+      return 0;
+}
+
+----------------
+1.18 - Beekeeper John bought a beehives and b bees. 
+Yet after purchase he noticed that at most 500 bees fit in one beehive. 
+Find out how much bees will live in Johns beehives.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b;
+    cin >> a;
+    cin >> b;
+    
+    if (a == 0){
+        cout << 0;
+        return 0;
+    }
+    
+    int c = b/500;
+    
+    if (c <= a){
+        cout << b;
+    }
+    else {
+        cout << (a*500);
+    }
+}
+
+----------------
+1.19 - You are given a number x and 2 intervals (a, b] and [c, Infinity) is it true that x is NOT in one of given intervals?
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int x, a, b, c;
+    cin >> x;
+    cin >> a;
+    cin >> b;
+    cin >> c;
+    
+    if (a < x && x <= b){
+        cout << "NO";
+        return 0;
+    }
+    else if (c <= x && x < 1000000){
+        cout << "NO";
+    }
+    else {
+        cout << "YES";
+    }
+}
+
+----------------
+1.20 - Print n asterisks.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+ 
+    for (int i = 0; i < a; i++)
+        cout << "*" << endl;
+}
+
+----------------
+1.21 - Given a and b print squares of all numbers in interval [a, b].
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b;
+    cin >> a;
+    cin >> b;
+
+    for (int i = a; i <= b; i++){
+        cout << i * i << endl;
+    }
+}
+
+----------------
+1.22 - John wrote all odd numbers in interval [1, n] then he wrote all even numbers in interval [1, n]. 
+We also know that he separated all numbers by commas, find the sequence John wrote.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+    
+    for (int i = 0; i <= a; i++){
+        if (i%2 != 0){
+            cout << i << ",";
+        }
+    }
+    
+    for (int i = 1; i <= a; i++){
+        if (a%2 == 0 && i == a){
+            cout << a;
+            return 0;
+        }
+        else if (a-1 == i && a%2 != 0){
+            cout << i;
+            return 0;
+        }
+        else if (i%2 == 0){
+            cout << i << ",";
+        }
+    }
+    return 0;
+}
+
+----------------
+1.23 - Given a number n check if its a prime.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin >> a;
+
+    if (a < 2){
+        cout << "NO";
+        return 0;
+    }
+    
+    for (int i = 2; i < a; i++){
+        if(a%i == 0){
+            cout << "NO";
+            return 0;
+        }
+    }
+    cout << "YES";
+}
+
+----------------
+1.24 - You are given some statistics data about n basketball players current season scores. 
+You gotta find hte accuracy (in percents) of a player that scored most points.
+first line - n (1 ≤ n ≤ 100). All other lines will have 3 pairs of numbers:
+two_point_throw_attemps, two_point_throw_succeeded,
+three_point_throw_attemps, three_point_throw_succeeded,
+penalty_throw_attemps, penalty_throw_succeeded. (Penalty throws are worth 1 point)
+Give answer rounded to 2 points after floating point, if theres more than one player with highest score, 
+output accuracy of one thats earlier in the list.
+
+----------------
+1.25 - Consider an algorithm that takes as input a positive integer n. 
+If n is even, the algorithm divides it by two, and if n is odd, the algorithm multiplies it by three and adds one. 
+The algorithm repeats this, until n is one. Your task is to simulate the execution of the algorithm for a given value of n.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, odd;
+    cin >> a;
+    
+    if (a == 1){
+        cout << 1;
+        return 0;
+    }
+    else{
+        cout << a << ",";
+    }
+
+    bool run = true;
+    while (run){
+        
+        if (a%2 == 0){
+            if (a == 2){
+                cout << 1;
+                run = false;
+                return 0;
+            }
+            a = a/2;
+            cout << a << ",";
+        }
+        else if (a%2 != 0){
+            a = (a*3) + 1;
+            cout << a << ",";
+        }
+        
+    }
+    return 0;
+}
+
+----------------
+1.26 - Given integer n find how many digits it has.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    long a, count = 0;
+    cin >> a;
+    
+    while (a != 0){
+        a = a/10;
+        count++;
+    }
+    cout << count;
+}
+----------------
+1.27 - Two bears live together, first one of them weights a kilograms, other one b kilograms. 
+The first bear is currently lighter than second one. 
+It is also known that the weight of first bear increases three times every year, and weight of second bear - two times. 
+Find after how many years will the weight of first bear surpass the weight of second bear.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    long a, b, count = 0;
+    cin >> a;
+    cin >> b;
+    
+    while (a < b){
+        a = a * 3;
+        b = b * 2;
+        count ++;
+    }
+    if (a == b){
+        count = count + 1;
+    }
+    cout << count;
+}
+
+----------------
+1.28 - John found a dream job - the salary of first day of work is x euros and every day after it increases 3 times. 
+Now he wonders how many days he needs to work to save enough cash to buy a fishing rod that’s worth y euros.
+Output the minimum number of days to achieve john’s goal, if it’s impossible output "No chance" instead.
+
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a, b, count = 0;
+    cin >> a;
+    cin >> b;
+
+    if ((a > b) || (a == 0 && b == 0)){
+        cout << 0;
+        return 0;
+    }
+    
+    else if (a == 0 && b != 0){
+        cout << "No chance";
+        return 0;
+    }
+    
+    while (a < b){
+        a = a*3;
+        count++;
+    }
+    count = count + 1;
+    cout << count;
+}
+
+----------------
+1.29 - Given a number n Write it as a sum of as large as possible squares.
