@@ -187,11 +187,11 @@ int main() {
         }
         
         if (choice == 3){ // negatives to doubly linked
-            queue<int> negatives = tree.collectNegatives();
+            queue<int> positives = tree.collectNegatives();
             cout << "Positive numbers collected in the queue: ";
-            while (!negatives.empty()) {
-                cout << negatives.front() << " ";
-                negatives.pop();
+            while (!positives.empty()) {
+                cout << positives.front() << " ";
+                positives.pop();
             }
             cout << endl;
         }
