@@ -1,0 +1,289 @@
+//
+//  main.cpp
+//  alg 2 c and d
+//
+//  Created by Autumn Tiede on 11/10/23.
+//
+// create binary tree with integer elements. implement insert, search, print, and delte operations and perform the following actions:
+
+// c) Remove all elements from the tree that are greater than 10 by input then to the stack implemented as a singly-linked list.
+// d) Remove all items from the queue and the stack by printing them on the screen.
+
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+
+class Node_ss {
+public:
+    int data_ss;
+    Node_ss* next;
+
+    // constructor to initialize a node
+    Node_ss(int value) : data_ss(value), next(nullptr) {}
+};
+
+// represents stack implemented as singly linked list
+class Stack {
+public:
+    Node_ss* top;  // Pointer to the top of the stack
+    // initialize empty stack
+    Stack() : top(nullptr) {}
+
+    // push (insert) new element onto the stack
+    void push(int value) {
+        Node_ss* newNode = new Node_ss(value);
+        newNode->next = top;
+        top = newNode;
+    }
+
+    // pop (delete) element from the stack
+    void pop() {
+        if (top != nullptr) {
+            Node_ss* temp = top;
+            top = top->next;
+            delete temp;
+        } else {
+            cout << "stack is empty." << endl;
+        }
+    }
+
+    // print elements of stack
+    void print() {
+        Node_ss* current = top;
+        while (current != nullptr) {
+            cout << current->data_ss << " ";
+            current = current->next;
+        }
+        cout << endl;
+    }
+    
+    bool isEmpty() {
+           return top == nullptr;
+       }
+};
+    
+    
+// making tree
+class Node { // creates nodes for binary tree
+public:
+    int key;
+    Node* left; // accessible members outside of class
+    Node* right;
+
+    Node(int k) { // constructor
+        key = k;
+        left = right = nullptr; // when node created, has no left or right child
+    }
+};
+
+class BinaryTree { // private class for the binary tree
+private:
+    Node* root;
+
+    Node* insertTree(Node* root, int key) { // inserting elements to tree
+        if (root == nullptr) { // if root = 0
+            return new Node(key); // create new node
+        }
+
+        if (key < root->key) { // putting new node left or right depending on value
+            root->left = insertTree(root->left, key);
+        } else if (key > root->key) {
+            root->right = insertTree(root->right, key);
+        }
+
+        return root;
+    }
+
+    void insertTreeInverse(Node* root) { // putting items in starting from left
+        if (root != nullptr) {
+            insertTreeInverse(root->left);
+            cout << root->key << " ";
+            insertTreeInverse(root->right);
+        }
+    }
+
+    Node* searchTree(Node* root, int key) { // for searching for an item
+        if (root == nullptr || root->key == key) { // returns value if found
+            return root;
+        }
+
+        if (key < root->key) {
+            return searchTree(root->left, key);
+        }
+
+        return searchTree(root->right, key);
+    }
+
+    Node* deleteTree(Node* root, int key) { // deletes elements
+        if (root == nullptr) { // if doesnt exist, return nothing
+            return root;
+        }
+
+        if (key < root->key) { // checking right and left sides
+            root->left = deleteTree(root->left, key);
+        } else if (key > root->key) {
+            root->right = deleteTree(root->right, key);
+        } else {
+            if (root->left == nullptr) {
+                Node* temp = root->right;
+                delete root;
+                return temp;
+            } else if (root->right == nullptr) {
+                Node* temp = root->left;
+                delete root;
+                return temp;
+            }
+
+            Node* temp = root->right;
+            while (temp->left != nullptr) {
+                temp = temp->left;
+            }
+
+            root->key = temp->key;
+            root->right = deleteTree(root->right, temp->key);
+        }
+        return root;
+    }
+
+
+public:
+    BinaryTree() { // initializing values
+        root = nullptr;
+    }
+
+    void insert(int key) {
+        root = insertTree(root, key);
+    }
+
+    void printTree() {
+        insertTreeInverse(root);
+        cout << endl;
+    }
+
+    bool search(int key) {
+        return searchTree(root, key) != nullptr;
+    }
+
+    void remove(int key) {
+        root = deleteTree(root, key);
+    }
+};
+
+int main() {
+    int num, choice = 0, search_num = 0, delete_num = 0, ins;
+    
+    bool program_run = true;
+    while (program_run){
+        // starting menu
+        cout << "\nPress 1 to search for an element in the tree" << endl;
+        cout << "Press 2 to delete an element in the tree" << endl;
+        cout << "Press 3 to remove all elements greater than 10 and input them to a stack implemented as a singly linked list." << endl;
+        cout << "Press 4 to remove all items from the tree and the stack by printing them on the screen." << endl;
+        cout << "Press 5 to exit the program" << endl;
+        cin >> choice;
+        
+        if (choice == 5){ // return
+            program_run = false;
+            return 0;
+        }
+        
+        BinaryTree tree; // making the tree and stack list thing
+        Stack single_stack_list;
+        
+        cout << "How many elements do you want to add to the tree?: ";
+        cin >> num;
+        
+        if (num == 0){
+            while(num == 0){
+                cout << "\nNumber cannot be 0. Please choose a different number: ";
+                cin >> num;
+            }
+        }
+        
+        int elements[num];
+        
+        cout << "Please enter " << num << " elements: ";
+        for (int i = 0; i < num; i++){
+            cin >> elements[i];
+        }
+        for (int element : elements) {
+            tree.insert(element);
+        }
+        
+        if (choice == 1){ // searching
+            cout << "Which integer would you like to search for?: ";
+            cin >> search_num;
+            int searchKey = search_num;
+            if (tree.search(searchKey)) {
+                cout << searchKey << " is found in the tree" << endl;
+            } else {
+                cout << searchKey << " is not found in the tree" << endl;
+            }
+        }
+        
+        if (choice == 2){ // deleting
+            cout << "Which integer would you like to delete?: ";
+            cin >> delete_num;
+            int deleteKey = delete_num;
+            tree.remove(deleteKey);
+            cout << "Deleted " << deleteKey << " from the tree" << endl;
+            cout << "Tree after deletion: ";
+            tree.printTree();
+        }
+        
+        if (choice == 3) { // remove greater than 10, insert to stack single list
+            for (int i = 0; i < num; i++) {
+                if (elements[i] > 10) {
+                    single_stack_list.push(elements[i]);
+                    tree.remove(elements[i]);
+                }
+            }
+            cout << "\nTree after removing elements greater than 10: ";
+            tree.printTree();
+            
+            cout << "Elements greater than 10 inserted into the stack: ";
+            single_stack_list.print();
+        }
+        
+        if (choice == 4) { // remove all elements from both stack and single list, print on screen.
+            cout << "How many elements do you want to add to the stack?: ";
+            cin >> num;
+            
+            if (num == 0){
+                while(num == 0){
+                    cout << "\nNumber cannot be 0. Please choose a different number: ";
+                    cin >> num;
+                }
+            }
+            
+            cout << "Please enter " << num << " elements: ";
+            for (int i = 0; i < num; i++){
+                cin >> ins;
+                single_stack_list.push(ins);
+            }
+            
+            for (int i = 0; i < num; i++) { // delete from tree
+                cout << "Element removed from tree: " << elements[i] << endl;
+                tree.remove(elements[i]);
+            }
+            while (!single_stack_list.isEmpty()) {
+                cout << "Elements left in stack: ";
+                single_stack_list.print();
+                single_stack_list.pop();
+            }
+           
+            cout << "Tree after removing all elements: ";
+            tree.printTree();
+            
+            cout << "Stack after removing all elements: ";
+            single_stack_list.print();
+        }
+    }
+
+    cout << "\n";
+    return 0;
+}
+
+
+
