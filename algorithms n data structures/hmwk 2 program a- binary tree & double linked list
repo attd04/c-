@@ -12,6 +12,54 @@
 #include <queue>
 using namespace std;
 
+// doubly linked list
+class Node_double {
+public:
+    int data_double;
+    Node_double* prev;
+    Node_double* next;
+
+    // Constructor to initialize a node
+    Node_double(int value) : data_double(value), prev(nullptr), next(nullptr) {}
+};
+
+class DoublyLinkedList {
+private:
+    Node_double* head;  // Pointer to the head of the list
+
+public:
+    // Constructor to initialize an empty list
+    DoublyLinkedList() : head(nullptr) {}
+
+    // Function to insert a new node at the end of the list
+    void insert_double(int value) {
+        Node_double* newNode = new Node_double(value);
+        if (head == nullptr) {
+            // If the list is empty, set the new node as the head
+            head = newNode;
+        } else {
+            // Otherwise, traverse the list to the end and insert the new node
+            Node_double* current = head;
+            while (current->next != nullptr) {
+                current = current->next;
+            }
+            current->next = newNode;
+            newNode->prev = current;
+        }
+    }
+
+    // print the elements
+    void print_double() {
+        Node_double* current = head;
+        while (current != nullptr) {
+            std::cout << current->data_double << " ";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+};
+
+// tree
 class Node { // creates nodes for binary tree
 public:
     int key;
@@ -28,49 +76,49 @@ class BinaryTree { // private class for the binary tree
 private:
     Node* root;
 
-    Node* insertRecursively(Node* root, int key) { // inserting elements to tree
+    Node* inputTree(Node* root, int key) { // inserting elements to tree
         if (root == nullptr) { // if root = 0
             return new Node(key); // create new node
         }
 
         if (key < root->key) { // putting new node left or right depending on value
-            root->left = insertRecursively(root->left, key);
+            root->left = inputTree(root->left, key);
         } else if (key > root->key) {
-            root->right = insertRecursively(root->right, key);
+            root->right = inputTree(root->right, key);
         }
 
         return root;
     }
 
-    void inOrderTraversal(Node* root) { // putting items in starting from left
+    void inputTreeInverse(Node* root) { // putting items in starting from left
         if (root != nullptr) {
-            inOrderTraversal(root->left);
+            inputTreeInverse(root->left);
             cout << root->key << " ";
-            inOrderTraversal(root->right);
+            inputTreeInverse(root->right);
         }
     }
 
-    Node* searchRecursively(Node* root, int key) { // for searching for an item
+    Node* searchTree(Node* root, int key) { // for searching for an item
         if (root == nullptr || root->key == key) { // returns value if found
             return root;
         }
 
         if (key < root->key) {
-            return searchRecursively(root->left, key);
+            return searchTree(root->left, key);
         }
 
-        return searchRecursively(root->right, key);
+        return searchTree(root->right, key);
     }
 
-    Node* deleteRecursively(Node* root, int key) { // deletes elements
+    Node* deleteTree(Node* root, int key) { // deletes elements
         if (root == nullptr) { // if doesnt exist, return nothing
             return root;
         }
 
         if (key < root->key) { // checking right and left sides
-            root->left = deleteRecursively(root->left, key);
+            root->left = deleteTree(root->left, key);
         } else if (key > root->key) {
-            root->right = deleteRecursively(root->right, key);
+            root->right = deleteTree(root->right, key);
         } else {
             if (root->left == nullptr) {
                 Node* temp = root->right;
@@ -88,12 +136,12 @@ private:
             }
 
             root->key = temp->key;
-            root->right = deleteRecursively(root->right, temp->key);
+            root->right = deleteTree(root->right, temp->key);
         }
         return root;
     }
 
-    void collectNegatives(Node* root, queue<int>& negativesQueue) { // deletes elements
+    void collectNegatives(Node* root, queue<int>& negativesQueue) { // collects neg elements
         if (root != nullptr) {
             collectNegatives(root->left, negativesQueue);
             if (root->key < 0) {
@@ -109,20 +157,20 @@ public:
     }
 
     void insert(int key) {
-        root = insertRecursively(root, key);
+        root = inputTree(root, key);
     }
 
     void printTree() {
-        inOrderTraversal(root);
+        inputTreeInverse(root);
         cout << endl;
     }
 
     bool search(int key) {
-        return searchRecursively(root, key) != nullptr;
+        return searchTree(root, key) != nullptr;
     }
 
     void remove(int key) {
-        root = deleteRecursively(root, key);
+        root = deleteTree(root, key);
     }
 
     queue<int> collectNegatives() {
@@ -149,7 +197,8 @@ int main() {
             return 0;
         }
         
-        BinaryTree tree; // making the tree
+        BinaryTree tree; // making the tree and doublylinked
+        DoublyLinkedList double_linked_list;
         cout << "How many elements do you want to add to the tree?: ";
         cin >> num;
         int elements[num];
@@ -161,9 +210,6 @@ int main() {
         for (int element : elements) {
             tree.insert(element);
         }
-        cout << "\nOriginal Tree: ";
-        tree.printTree();
-        
         
         if (choice == 1){ // searching
             cout << "Which integer would you like to search for?: ";
@@ -188,11 +234,12 @@ int main() {
         
         if (choice == 3){ // negatives to doubly linked
             queue<int> negatives = tree.collectNegatives();
-            cout << "Negative numbers collected in the queue: ";
+            cout << "Doubly linked list with negative numbers: ";
             while (!negatives.empty()) {
-                cout << negatives.front() << " ";
+                double_linked_list.insert_double(negatives.front());
                 negatives.pop();
             }
+            double_linked_list.print_double();
             cout << endl;
         }
     }
