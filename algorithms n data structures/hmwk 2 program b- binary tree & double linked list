@@ -201,6 +201,12 @@ int main() {
         DoublyLinkedList double_linked_list;
         cout << "How many elements do you want to add to the tree?: ";
         cin >> num;
+        
+        while(num == 0){
+            cout << "\nNumber cannot be 0. Please choose a different number: ";
+            cin >> num;
+        }
+        
         int elements[num];
         
         cout << "Please enter " << num << " elements: ";
@@ -252,6 +258,7 @@ int main() {
     cout << "\n";
     return 0;
 }
+
 
 
 
