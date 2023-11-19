@@ -239,7 +239,12 @@ int main() {
                 double_linked_list.insert_double(negatives.front());
                 negatives.pop();
             }
-            double_linked_list.print_double();
+            if (negatives.empty()){
+                cout << "No negative elements were found.";
+            }
+            else {
+                double_linked_list.print_double();
+            }
             cout << endl;
         }
     }
