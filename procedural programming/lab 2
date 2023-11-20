@@ -1,0 +1,333 @@
+
+1 - Given an array of n numbers print first element of the array
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int num;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++)
+            cin >> v[i];
+    
+    cout << v[0];
+}
+
+----------------
+2 - Given an array of n numbers find the sum of first and last elements of array
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int num;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++)
+            cin >> v[i];
+    
+    cout <<  v[0] + v[num-1];
+}
+
+----------------
+3 - Given an array of n numbers find the sum of all elements of array
+output must have 2 places after decimal
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int num, sum = 0;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++)
+            cin >> v[i];
+    
+    for (int i = 0; i < num; i++)
+        sum = sum + v[i];
+    
+    cout << sum;
+}
+
+----------------
+4 - Given an array of n numbers, find the average of array
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double num, sum = 0;
+    cin >> num;
+    
+    vector<double> v(num);
+    for (double i = 0; i < num; i++)
+            cin >> v[i];
+    
+    for (double i = 0; i < num; i++)
+        sum = sum + v[i];
+    
+    cout << fixed << setprecision(2) << sum/num;
+}
+
+----------------
+5 - Given an array of n numbers, find the average of positive elements in the array
+Output the answer with 2 digits after floating point. If the answer does not exist output NO
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double num, pos_sum = 0, count = 0;
+    cin >> num;
+    
+    vector<double> v(num);
+    for (double i = 0; i < num; i++)
+            cin >> v[i];
+    
+    for (double i = 0; i < num; i++)
+        if (v[i] > 0){
+            pos_sum = pos_sum + v[i];
+            count ++;
+        }
+        else if (count == 0 && i == num-1){
+            cout << "NO";
+            return 0;
+        }
+    
+    cout << fixed << setprecision(2) << pos_sum/count;
+}
+
+----------------
+6 - Given an array of n numbers find the maximum number in it
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int num, biggest = -100000000;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++){
+        cin >> v[i];
+        if (v[i] > biggest){
+            biggest = v[i];
+        }
+    }
+
+    cout << biggest;
+}
+
+----------------
+7 - Given an array of n numbers find the smallest even number in it
+    if it does not exist output NO
+
+----------------
+8 - Given an array of n numbers find the position of maximum even number in it
+Output the answer, if it does not exist output NO
+
+----------------
+9 - Given an array of n numbers sort it in increasing order
+
+----------------
+10 - Given an array of n numbers find the average of all elements that have 2 neighbours
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double num, count = 0, sum = 0;
+    cin >> num;
+    
+    vector<double> v(num);
+    for (double i = 0; i < num; i++){
+        cin >> v[i];
+    }
+    
+    for (double i = 1; i < num; i++){
+        if (i!= num-1){
+            sum = sum + v[i];
+            count ++;
+        }
+    }
+    cout << fixed << setprecision(3) << sum/count;
+}
+
+----------------
+11 - Given an array of n numbers find if there exists 3 equal elements in it- NOT WORKING
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int num, sum = 0, n = 0;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++){
+        cin >> v[i];
+    }
+    
+    for (int i = 0; i < num; i++){
+        n = v[i];
+        for (int i = 0; i < num; i++){
+            if (v[i] == n){
+                sum++;
+            }
+            if (sum >= 3){
+                cout << "YES";
+                return 0;
+            }
+        }
+    }
+    cout << "NO";
+    return 0;
+}
+
+----------------
+12 - Given an array of n numbers check if all numbers are different
+
+----------------
+13 - Given an array of n numbers find the sum of 2 largest elements in it - NEEDS FIXING
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int num, biggest = -1000000, biggest_2 = -1000000;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++){
+        cin >> v[i];
+        if (v[i] > biggest){
+            biggest = v[i];
+        }
+    }
+    
+    for (int i = 0; i < num; i++){
+        if (v[i] > biggest_2 && v[i]!=biggest){
+            biggest_2 = v[i];
+        }
+    }
+    cout << biggest + biggest_2;
+}
+
+----------------
+14 - Given an array of n numbers choose 2 different elements from it in such a way that their product is maximized
+
+----------------
+15 - Given an array of n numbers find the smallest audacious number in it.  -- FIX
+A number is said to be audacious if its positive and larger than his neighbours
+if answer does not exist output NO
+
+#include <iostream>
+#include <vector>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int num, smallest = 1000000;
+    cin >> num;
+    
+    vector<int> v(num);
+    for (int i = 0; i < num; i++){
+        cin >> v[i];
+    }
+    
+    vector<int> audacious;
+    for (int i =1; i < num; i++){
+        if (v[i] > 0){
+            if (v[i] > v[i-1] && v[i] > v[i+1]){
+                audacious.push_back(v[i]);
+            }
+        }
+    }
+    
+    for (int i = 0; i < audacious.size(); i++){
+        if (audacious[i] < smallest){
+            smallest = audacious[i];
+        }
+    }
+    if (audacious.size() == 0){
+        cout << "NO";
+        return 0;
+    }
+    else {
+        cout << smallest;
+    }
+}
+
+----------------
+16 - Given a matrix of size n × m find the sum of all its elements
+
+----------------
+17 - Given a matrix of size n×m find the average of all its elements
+output the answer with 2 digits after floating point
+
+----------------
+18 - Given a matrix of size n×m find the average of all its negative elements
+output the answer with 3 digits after floating point, if answer does not exist output NO
+
+----------------
+19 - Given a matrix of size n×n and row number k, find the sum of elements that belong to k-th row
+
+----------------
+20 - Given a matrix of size n×n find the largest element in it
+
+----------------
+21 - Given a matrix of size n×m find the largest element in the second row of the matrix
+      if answer does not exist output NO
+
+----------------
+22 - Given a matrix of size n×n and column number k, find the largest element in the matrix thats to the right if column k
+
+----------------
+23 - Given a matrix of size n×m find the average of the column which contains the smallest matrix element
+    output the answer with 2 digits after floating point
+
+----------------
+24 - Given a matrix of size n×n, find the maximum of all elements except the one in third row and second column
+
+----------------
+25 - Given a matrix of size n×n find the sum of all elements that are below the main diagonal
+    if answer does not exist output NO
+
+----------------
+26 - Given a matrix of size n×n find the largest negative element that is above the minor diagonal
+    if answer does not exist output "NO"
+
+----------------
+27 - Using a matrix you need to draw a diamond, for contour of the diamond use symbol "O", 
+    the rest of space should be filled with symbol "-"
+
+----------------
+28 - Given a matrix of size n×n rotate it clockwise 90 degrees
+
+----------------
+29 - Given a matrix of size n×m check if it contains a sub-matrix of size 2×2 which elements sum to a prime number.
+      output YES or NO
+
+----------------
+30 - Given a matrix of size n×m find the path going from top-left corner to bottom-right such that
+    all moves in path are either down or right and the sum of numbers in the path is minimized
+
+
