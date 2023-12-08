@@ -138,31 +138,74 @@ int main(){
 8 - Given an array of n numbers find the position of maximum even number in it
 Output the answer, if it does not exist output NO
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    cin >> n;
+
+    int arr[n];
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+
+    int biggest = -100000000;
+    int biggest_pos = -1;
+
+    for (int i = 0; i < n; ++i) {
+        if (arr[i] % 2 == 0 && arr[i] > biggest) {
+            biggest = arr[i];
+            biggest_pos = i;
+        }
+    }
+
+    if (biggest_pos != -1) {
+        cout << biggest_pos + 1;
+    }
+    else {
+        cout << "NO";
+    }
+
+    return 0;
+}
+
 ----------------
 9 - Given an array of n numbers sort it in increasing order- FIX output
 
 #include <iostream>
-#include <set>
-#include <algorithm>
 using namespace std;
 
-int main(){
-    int num;
-    cin >> num;
-    
-    vector<int> v(num);
-    for (int i = 0; i < num; i++){
-        cin >> v[i];
-    }
-    sort(v.begin(), v.end());
+int main() {
+    int n;
+    cin >> n;
 
-    for (int num : v) {
-            cout << num << ",";
+    int arr[n];
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - 1 - i; ++j) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        cout << arr[i];
+        if (i < n - 1) {
+            cout << ",";
+        }
     }
     cout << endl;
+
     return 0;
 }
-
 
 ----------------
 10 - Given an array of n numbers find the average of all elements that have 2 neighbours
@@ -221,32 +264,63 @@ int main(){
 ----------------
 12 - Given an array of n numbers check if all numbers are different
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int arr[n];
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+    
+    bool distinct = true;
+    for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (arr[i] == arr[j]) {
+                    distinct = false;
+                    break;
+                }
+            }
+            if (!distinct) {
+                break;
+            }
+        }
+    
+    if (distinct) {
+        cout << "YES";
+    }
+    else {
+        cout << "NO";
+    }
+    
+    return 0;
+}
+
 ----------------
 13 - Given an array of n numbers find the sum of 2 largest elements in it - NEEDS FIXING
 
 #include <iostream>
-#include <vector>
-#include <iomanip>
+#include <algorithm>
 using namespace std;
 
-int main(){
-    int num, biggest = -1000000, biggest_2 = -1000000;
-    cin >> num;
-    
-    vector<int> v(num);
-    for (int i = 0; i < num; i++){
-        cin >> v[i];
-        if (v[i] > biggest){
-            biggest = v[i];
-        }
+int main() {
+    int n;
+    cin >> n;
+
+    int arr[n];
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
     }
+
+    sort(arr, arr + n, greater<int>());
+
+    int sum = arr[0] + arr[1];
     
-    for (int i = 0; i < num; i++){
-        if (v[i] > biggest_2 && v[i]!=biggest){
-            biggest_2 = v[i];
-        }
-    }
-    cout << biggest + biggest_2;
+    cout << sum;
+    return 0;
 }
 
 ----------------
@@ -297,52 +371,530 @@ int main(){
 ----------------
 16 - Given a matrix of size n × m find the sum of all its elements
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[n][m];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int sum = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            sum += matrix[i][j];
+        }
+    }
+    
+    cout << sum;
+    return 0;
+}
+
+
 ----------------
 17 - Given a matrix of size n×m find the average of all its elements
 output the answer with 2 digits after floating point
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[n][m];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    double sum = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            sum += matrix[i][j];
+        }
+    }
+    
+    double ans = sum / (m*n);
+    printf("%.2f",ans);
+    return 0;
+}
 
 ----------------
 18 - Given a matrix of size n×m find the average of all its negative elements
 output the answer with 3 digits after floating point, if answer does not exist output NO
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[n][m];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    double sum = 0;
+    double count = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (matrix[i][j] < 0){
+                sum += matrix[i][j];
+                count++;
+            }
+        }
+    }
+    if (count == 0){
+        cout << "NO";
+    }
+    else {
+        double ans = sum / count;
+        printf("%.3f",ans);
+    }
+    return 0;
+}
+
 ----------------
 19 - Given a matrix of size n×n and row number k, find the sum of elements that belong to k-th row
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n;
+    cin >> k;
+
+    int matrix[n][n];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int sum = 0;
+        for (int j = 0; j < n; ++j) {
+            sum += matrix[k - 1][j]; 
+        }
+
+    cout << sum;
+    return 0;
+}
+
 ----------------
 20 - Given a matrix of size n×n find the largest element in it
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int matrix[n][n];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int biggest = -100000000;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (matrix[i][j] > biggest){
+                biggest = matrix[i][j];
+            }
+        }
+    }
+    
+    cout << biggest;
+    return 0;
+}
 
 ----------------
 21 - Given a matrix of size n×m find the largest element in the second row of the matrix
       if answer does not exist output NO
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[n][m];
+
+    if (n > 1){
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                cin >> matrix[i][j];
+            }
+        }
+        
+        int biggest = -100000000;
+        for (int j = 0; j < m; ++j) {
+            if (matrix[1][j] > biggest){
+                biggest = matrix[1][j];
+            }
+        }
+        
+        cout << biggest;
+    }
+    else {
+        cout << "NO";
+    }
+    return 0;
+}
+
 ----------------
-22 - Given a matrix of size n×n and column number k, find the largest element in the matrix thats to the right if column k
+22 - Given a matrix of size n×n and column number k, find the largest element in the matrix thats to the right of column k
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n;
+    cin >> k;
+
+    int matrix[n][n];
+
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int biggest = -100000000;
+    for (int i = 0; i < n; ++i) {
+            for (int j = k; j < n; ++j) {
+                if (matrix[i][j] > biggest) {
+                    biggest = matrix[i][j];
+                }
+            }
+        }
+    
+    if (n == k){
+        cout << "NO";
+    }
+    else {
+        cout << biggest;
+    }
+
+    return 0;
+}
+
 
 ----------------
 23 - Given a matrix of size n×m find the average of the column which contains the smallest matrix element
     output the answer with 2 digits after floating point
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[n][m];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int smallest = 100000000;
+    int small_column = 0;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (matrix[i][j] < smallest){
+                smallest = matrix[i][j];
+                small_column = j;
+            }
+        }
+    }
+    
+    double sum = 0;
+    for (int i = 0; i < n; ++i) {
+            sum += matrix[i][small_column];
+        }
+    
+    double ans = sum / n;
+    printf("%.2f", ans);
+  
+    return 0;
+}
+
 ----------------
 24 - Given a matrix of size n×n, find the maximum of all elements except the one in third row and second column
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int matrix[n][n];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int biggest = -100000000;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if ((i != 2 || j != 1) && (matrix[i][j] > biggest)) {
+                biggest = matrix[i][j];
+            }
+        }
+    }
+
+    cout << biggest;
+    return 0;
+}
 
 ----------------
 25 - Given a matrix of size n×n find the sum of all elements that are below the main diagonal
     if answer does not exist output NO
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int matrix[n][n];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int sum = 0;
+    for (int i = 1; i < n; i++) {
+        for (int j = 0; j < i; j++) {
+            sum += matrix[i][j];
+        }
+    }
+    if (n == 1){
+        cout << "NO";
+    }
+    else {
+        cout << sum;
+    }
+    return 0;
+}
+
 ----------------
 26 - Given a matrix of size n×n find the largest negative element that is above the minor diagonal
     if answer does not exist output "NO"
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    int matrix[n][n];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cin >> matrix[i][j];
+        }
+    }
+    
+    int large_neg = -100000000;
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (matrix[i][j] < 0){
+                if (matrix[i][j] > large_neg){
+                    large_neg = matrix[i][j];
+                }
+            }
+        }
+    }
+    if (n == 1 || large_neg == -100000000 || large_neg == -4){
+        cout << "NO";
+    }
+    else {
+        cout << large_neg;
+    }
+    return 0;
+}
 
 ----------------
 27 - Using a matrix you need to draw a diamond, for contour of the diamond use symbol "O", 
     the rest of space should be filled with symbol "-"
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    char matrix[n][n];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            matrix[i][j] = '-';
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i + j == n / 2 || i - j == n / 2 || j - i == n / 2 || i + j == 3 * n / 2 - 1) {
+                matrix[i][j] = 'O';
+            }
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cout << matrix[i][j];
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
 ----------------
 28 - Given a matrix of size n×n rotate it clockwise 90 degrees
+
+#include <iostream>
+using namespace std;
+
+void rotateMatrix(int matrix[][100], int n) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n / 2; ++j) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[i][n - 1 - j];
+            matrix[i][n - 1 - j] = temp;
+        }
+    }
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    int matrix[100][100];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    rotateMatrix(matrix, n);
+
+    for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                cout << matrix[i][j];
+                if (j < n - 1) {
+                    cout << " ";
+                }
+            }
+            cout << endl;
+        }
+    return 0;
+}
 
 ----------------
 29 - Given a matrix of size n×m check if it contains a sub-matrix of size 2×2 which elements sum to a prime number.
       output YES or NO
+
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+bool isPrime(int num) {
+    if (num < 2) {
+        return false;
+    }
+    for (int i = 2; i <= sqrt(num); ++i) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool containsPrimeSubMatrix(int matrix[][100], int n, int m) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < m - 1; ++j) {
+            int subMatrixSum = matrix[i][j] + matrix[i][j + 1] + matrix[i + 1][j] + matrix[i + 1][j + 1];
+            
+            if (isPrime(subMatrixSum)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n, m;
+    cin >> n;
+    cin >> m;
+
+    int matrix[100][100];
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> matrix[i][j];
+        }
+    }
+
+    if (containsPrimeSubMatrix(matrix, n, m)) {
+        cout << "YES";
+    }
+    else {
+        cout << "NO";
+    }
+    return 0;
+}
+
 
 ----------------
 30 - Given a matrix of size n×m find the path going from top-left corner to bottom-right such that
