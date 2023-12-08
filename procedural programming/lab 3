@@ -1,0 +1,29 @@
+Task 1 - Given 2 integers you need to find their sum. You must implement a function int Sum(int a, int b).
+
+#include <iostream>
+using namespace std;
+
+int Sum(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int num1, num2;
+    cin >> num1;
+    cin >> num2;
+
+    int result = Sum(num1, num2);
+    cout << result;
+
+    return 0;
+}
+------------------
+Task 2 - 
+
+------------------
+Task 16 - Given a matrix of size NxM. 
+Change all elements that are smaller than average of all elements to value of element in last row and first column multiplied by 2.
+In the main() function you are only allowed to declare variables and call functions
+All variables to functions must be passed as pointers
+All variables in functions must be pointers, arrays should be accessed/modified only with arrow operators
+Matrix should be saved in dynamic memory and memory should be freed after all calculations
