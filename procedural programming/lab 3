@@ -18,7 +18,577 @@ int main() {
     return 0;
 }
 ------------------
-Task 2 - 
+Task 2 - Given 4 integers find their sum. You must use the function you implemented in the previous exercise.
+
+#include <iostream>
+using namespace std;
+
+int Sum(int a, int b, int c, int d) {
+    return a + b + c + d;
+}
+
+int main() {
+    int num1, num2, num3, num4;
+    cin >> num1;
+    cin >> num2;
+    cin >> num3;
+    cin >> num4;
+
+    int result = Sum(num1, num2, num3, num4);
+    cout << result;
+
+    return 0;
+}
+
+------------------
+Task 3 - Given the length of square diagonal L.
+Write a function that finds the area of the square.
+
+#include <iostream>
+using namespace std;
+
+double Area(double a) {
+    return ((a*a) / 2);
+}
+
+int main() {
+    double num1;
+    cin >> num1;
+
+    double result = Area(num1);
+    cout << result;
+
+    return 0;
+}
+
+------------------
+Task 4 - Given an integer convert it to binary number system. 
+You must implement a function DecToBin(int a)
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+vector<int> DecToBin(int a) {
+    vector<int> binary;
+    
+    if (a == 0) {
+        binary.push_back(0);
+    }
+    else {
+        while (a > 0) {
+            binary.push_back(a % 2);
+            a /= 2;
+        }
+    }
+    reverse(binary.begin(), binary.end());
+    return binary;
+}
+
+
+int main() {
+    int num1;
+    cin >> num1;
+
+    vector<int> binary = DecToBin(num1);
+    for (int n : binary) {
+            cout << n;
+        }
+
+    return 0;
+}
+
+------------------
+Task 5 - Implement swap function Swap(int &a, int &b) that swaps given integers
+
+#include <iostream>
+using namespace std;
+
+void Swap(int &a, int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main() {
+    int num1, num2;
+    cin >> num1;
+    cin >> num2;
+    
+    Swap(num1, num2);
+    
+    cout << num1 << " " << num2;
+
+    return 0;
+}
+------------------
+Task 6 - Given an integer determine if its a prime number. 
+you must implement a function bool IsPrime(long long a).
+Output 1 if given integer is prime or 0 otherwise
+
+#include <iostream>
+using namespace std;
+
+bool IsPrime(long long a) {
+    if (a <= 1) {
+        return false;
+    }
+
+    for (long long i = 2; i <= sqrt(a); i++) {
+        if (a % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int num1;
+    cin >> num1;
+
+    if (IsPrime(num1)) {
+        cout << "1";
+        }
+    else {
+        cout << "0";
+        }
+
+    return 0;
+}
+
+------------------
+Task 8 - Given a sequence of integers sort them in descending order. 
+You must implement 3 functions: ReadSequence(...) SortSequence(...) PrintSequence(..) 
+it is forbidden to use variables in global scope
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void ReadSequence(vector<int>& sequence) {
+    int n;
+    cin >> n;
+
+    sequence.resize(n);
+
+    for (int i = 0; i < n; ++i) {
+        cin >> sequence[i];
+    }
+}
+
+void SortSequence(vector<int>& sequence) {
+    sort(sequence.begin(), sequence.end(), greater<int>());
+}
+
+void PrintSequence(const vector<int>& sequence) {
+    if (!sequence.empty()) {
+        cout << sequence[0];
+    }
+
+    for (size_t i = 1; i < sequence.size(); ++i) {
+        cout << " " << sequence[i];
+    }
+
+    cout << endl;
+}
+
+int main() {
+    vector<int> sequence;
+
+    ReadSequence(sequence);
+    SortSequence(sequence);
+    PrintSequence(sequence);
+
+    return 0;
+}
+
+------------------
+Task 10 - Rewrite Swap(int &a, int &b) function you wrote in some previous ewxercise by using pointers Swap(int *a, int *b)
+
+#include <iostream>
+using namespace std;
+
+void Swap(int* a, int* b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    int num1, num2;
+    cin >> num1;
+    cin >> num2;
+
+    Swap(&num1, &num2);
+
+    cout << num1 << " " << num2;
+
+    return 0;
+}
+
+------------------
+Task 11 - Given sequence of integers find min element, max element and average of the sequence. 
+All calculations must be in some function and arguments (sequences) passed by pointers.
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+using namespace std;
+
+void CalculateStats(const int* sequence, int size, int& minElement, int& maxElement, double& average) {
+    if (size == 0) {
+        minElement = maxElement = 0;
+        average = 0.0;
+        return;
+    }
+
+    // initialize min and max
+    minElement = maxElement = sequence[0];
+    double sum = sequence[0];
+
+    // go thru sequence find min, max, & calculate sum
+    for (int i = 1; i < size; ++i) {
+        sum += sequence[i];
+
+        if (sequence[i] < minElement) {
+            minElement = sequence[i];
+        }
+
+        if (sequence[i] > maxElement) {
+            maxElement = sequence[i];
+        }
+    }
+
+    average = sum / size;
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    int size;
+    inputFile >> size;
+
+    int* sequence = new int[size];
+
+    for (int i = 0; i < size; ++i) {
+        inputFile >> sequence[i];
+    }
+
+    int minElement, maxElement;
+    double average;
+
+    CalculateStats(sequence, size, minElement, maxElement, average);
+
+    // write results to "out.txt"
+    outputFile << minElement << " " << maxElement << " " << fixed << setprecision(2) << average;
+
+    delete[] sequence;
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+------------------
+Task 12 - Given a matrix of size NxM. 
+Change all elements that are smaller than average of all elements to value of element in last row and first column multiplied by 2.
+Output the changed matrix, separate all elements by spaces and do not leave unnecessary spaces at the end of lines
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void ChangeMatrix(vector<vector<int>>& matrix) {
+    int sum = 0;
+    int count = 0;
+
+    for (const auto& row : matrix) {
+        for (int element : row) {
+            sum += element;
+            count++;
+        }
+    }
+
+    double average = static_cast<double>(sum) / count;
+
+    int lastRowFirstColElement = matrix.back().front();
+
+    for (auto& row : matrix) {
+        for (int& element : row) {
+            if (element < average) {
+                element = lastRowFirstColElement * 2;
+            }
+        }
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    int n, m;
+    inputFile >> n >> m;
+
+    vector<vector<int>> matrix(n, vector<int>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    ChangeMatrix(matrix);
+
+    for (const auto& row : matrix) {
+        bool firstElement = true;
+        for (int element : row) {
+            if (!firstElement) {
+                outputFile << " ";
+            }
+            outputFile << element;
+            firstElement = false;
+        }
+        outputFile << endl;
+    }
+
+    // close files
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+------------------
+Task 13 - Given a matrix of size NxM.
+Change all elements that are smaller than average of all elements to value of element in last row and first column multiplied by 2.
+In the main() function you are only allowed to declare variables and call functions
+Output the changed matrix, separate all elements by spaces and do not leave unnecessary spaces at the end of lines
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void ChangeMatrix(vector<vector<int>>& matrix) {
+    int sum = 0;
+    int count = 0;
+
+    for (const auto& row : matrix) {
+        for (int element : row) {
+            sum += element;
+            count++;
+        }
+    }
+
+    double average = static_cast<double>(sum) / count;
+
+    int lastRowFirstColElement = matrix.back().front();
+
+    for (auto& row : matrix) {
+        for (int& element : row) {
+            if (element < average) {
+                element = lastRowFirstColElement * 2;
+            }
+        }
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    int n, m;
+    inputFile >> n >> m;
+
+    vector<vector<int>> matrix(n, vector<int>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    ChangeMatrix(matrix);
+
+    for (const auto& row : matrix) {
+        bool firstElement = true;
+        for (int element : row) {
+            if (!firstElement) {
+                outputFile << " ";
+            }
+            outputFile << element;
+            firstElement = false;
+        }
+        outputFile << endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+------------------
+Task 14 - Given a matrix of size NxM.
+Change all elements that are smaller than average of all elements to value of element in last row and first column multiplied by 2.
+In the main() function you are only allowed to declare variables and call functions
+All variables to functions must be passed as pointers
+Output the changed matrix, separate all elements by spaces and do not leave unnecessary spaces at the end of lines
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void ChangeMatrix(vector<vector<int>>* matrix) {
+    int sum = 0;
+    int count = 0;
+
+    for (const auto& row : *matrix) {
+        for (int element : row) {
+            sum += element;
+            count++;
+        }
+    }
+
+    double average = static_cast<double>(sum) / count;
+
+    int lastRowFirstColElement = matrix->back().front();
+
+    for (auto& row : *matrix) {
+        for (int& element : row) {
+            if (element < average) {
+                element = lastRowFirstColElement * 2;
+            }
+        }
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Error opening files." << endl;
+        return 1;
+    }
+
+    int n, m;
+    inputFile >> n >> m;
+
+    vector<vector<int>> matrix(n, vector<int>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    ChangeMatrix(&matrix);
+    
+    for (const auto& row : matrix) {
+        bool firstElement = true;
+        for (int element : row) {
+            if (!firstElement) {
+                outputFile << " ";
+            }
+            outputFile << element;
+            firstElement = false;
+        }
+        outputFile << endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+------------------
+Task 15 - Given a matrix of size NxM.
+Change all elements that are smaller than average of all elements to value of element in last row and first column multiplied by 2.
+In the main() function you are only allowed to declare variables and call functions
+All variables to functions must be passed as pointers
+All variables in functions must be pointers, arrays should be accessed/modified only with arrow operators
+Output the changed matrix, separate all elements by spaces and do not leave unnecessary spaces at the end of lines
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void ChangeMatrix(vector<vector<int>>* matrix) {
+    int sum = 0;
+    int count = 0;
+
+    for (const auto& row : *matrix) {
+        for (int element : row) {
+            sum += element;
+            count++;
+        }
+    }
+
+    double average = static_cast<double>(sum) / count;
+
+    int lastRowFirstColElement = matrix->back().front();
+
+    for (auto& row : *matrix) {
+        for (int& element : row) {
+            if (element < average) {
+                element = lastRowFirstColElement * 2;
+            }
+        }
+    }
+}
+
+void OutputMatrix(const vector<vector<int>>* matrix, ofstream* outputFile) {
+    for (const auto& row : *matrix) {
+        bool firstElement = true;
+        for (int element : row) {
+            if (!firstElement) {
+                *outputFile << " ";
+            }
+            *outputFile << element;
+            firstElement = false;
+        }
+        *outputFile << endl;
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    int n, m;
+    inputFile >> n >> m;
+
+    vector<vector<int>> matrix(n, vector<int>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    ChangeMatrix(&matrix);
+
+    OutputMatrix(&matrix, &outputFile);
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
 
 ------------------
 Task 16 - Given a matrix of size NxM. 
@@ -27,3 +597,187 @@ In the main() function you are only allowed to declare variables and call functi
 All variables to functions must be passed as pointers
 All variables in functions must be pointers, arrays should be accessed/modified only with arrow operators
 Matrix should be saved in dynamic memory and memory should be freed after all calculations
+Data must be read from file in.txt. results written to file out.txt.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void ChangeMatrix(vector<vector<int>>* matrix, int* n, int* m) {
+    int sum = 0;
+    int count = 0;
+
+    for (int i = 0; i < *n; ++i) {
+        for (int j = 0; j < *m; ++j) {
+            sum += (*matrix)[i][j];
+            count++;
+        }
+    }
+
+    double average = static_cast<double>(sum) / count;
+
+    int lastRowFirstColElement = (*matrix)[*n - 1][0];
+
+    for (int i = 0; i < *n; ++i) {
+        for (int j = 0; j < *m; ++j) {
+            if ((*matrix)[i][j] < average) {
+                (*matrix)[i][j] = lastRowFirstColElement * 2;
+            }
+        }
+    }
+}
+
+void OutputMatrix(const vector<vector<int>>* matrix, int* n, int* m, ofstream* outputFile) {
+    for (int i = 0; i < *n; ++i) {
+        bool firstElement = true;
+        for (int j = 0; j < *m; ++j) {
+            if (!firstElement) {
+                *outputFile << " ";
+            }
+            *outputFile << (*matrix)[i][j];
+            firstElement = false;
+        }
+        *outputFile << endl;
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Error opening files." << endl;
+        return 1;
+    }
+
+    int n, m;
+    inputFile >> n >> m;
+
+    // dynamically allocate memory for matrix
+    vector<vector<int>>* matrix = new vector<vector<int>>(n, vector<int>(m));
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> (*matrix)[i][j];
+        }
+    }
+
+    ChangeMatrix(matrix, &n, &m);
+
+    OutputMatrix(matrix, &n, &m, &outputFile);
+
+    // deallocate memory
+    delete matrix;
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+------------------
+Task 17 - Given a sequence of n elements you need to delete k elements from it. 
+Every deletion is specified by position in sequence, keep in mind that as you delete elements positions of other elements can change.
+Data must be read from file in.txt. results written to file out.txt.
+
+------------------
+Task 18 - 
+
+
+------------------
+Task 19 - 
+#include <iostream>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+void rotateMatrix(vector<vector<int>>& matrix, int k) {
+    int N = matrix.size();
+
+    for (int rotation = 0; rotation < k; ++rotation) {
+        for (int i = 0; i < N; ++i) {
+            for (int j = i + 1; j < N; ++j) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+
+        for (int i = 0; i < N; ++i) {
+            reverse(matrix[i].begin(), matrix[i].end());
+        }
+    }
+}
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    int N, k;
+    inputFile >> N >> k;
+
+    vector<vector<int>> matrix(N, vector<int>(N));
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    rotateMatrix(matrix, k);
+
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            outputFile << matrix[i][j];
+            if (j < N - 1) {
+                outputFile << " ";
+            }
+        }
+        outputFile << endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
+------------------
+Task 20 - In input file there‘s a sequence of integers of unknown length. 
+Find min and max elements in this sequecne using function minmax(...).
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    ifstream inputFile("in.txt");
+    ofstream outputFile("out.txt");
+
+    vector<int> sequence;
+    
+    int num;
+    while (inputFile >> num) {
+        sequence.push_back(num);
+    }
+
+    if (!sequence.empty()) {
+        auto minMaxPair = minmax_element(sequence.begin(), sequence.end());
+
+        int minValue = *minMaxPair.first;
+        int maxValue = *minMaxPair.second;
+        
+        outputFile << "Min is " << minValue << endl;
+        outputFile << "Max is " << maxValue << endl;
+    } 
+ 
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+------------------
+
