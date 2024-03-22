@@ -2,7 +2,7 @@
 #include <set>
 using namespace std;
 
-//problem 18
+//problem 18 
 
 int main18()
 {
