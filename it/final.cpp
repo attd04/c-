@@ -3,7 +3,6 @@
 //  it exam
 //
 //  Created by Autumn Tiede on 1/17/23.
-//
 
 #include <iostream>
 #include <math.h>
